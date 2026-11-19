@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thanks, Sliced</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,800;1,9..144,500&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <canvas id="leaves" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="top">
+      <a class="brand" href="#top"><i></i>Thanks, Sliced</a>
+      <nav aria-label="Sections">
+        <a href="#plate">Build a plate</a>
+        <a href="#timeline">Turkey timeline</a>
+        <a href="#talk">Table talk</a>
+      </nav>
+    </div>
+    <div class="hero-grid" id="top">
+      <div>
+        <span class="eyebrow" id="dateEyebrow">Thanksgiving</span>
+        <h1>Thanks, <em>sliced.</em></h1>
+        <p class="lede">Every pie gets cut. Add what you are thankful for and watch the pie divide itself up, one slice per thing. Then plan the plate, the bird and the conversation.</p>
+        <div class="count" role="timer" aria-label="Time until Thanksgiving">
+          <div><b id="cd-d">0</b><span>days</span></div>
+          <div><b id="cd-h">00</b><span>hours</span></div>
+          <div><b id="cd-m">00</b><span>min</span></div>
+          <div><b id="cd-s">00</b><span>sec</span></div>
+        </div>
+        <p class="count-note" id="cdNote"></p>
+      </div>
+
+      <div class="pie-card" id="pie">
+        <div class="pie-stage" id="stage">
+          <svg id="pieSvg" viewBox="-210 -210 420 420" role="img" aria-label="Pie divided into one slice per thing you are thankful for"></svg>
+          <div class="hub" id="hub"><b id="hubN">0</b><span id="hubT">things to be thankful for</span></div>
+        </div>
+        <form class="add" id="addForm" autocomplete="off">
+          <input id="thing" type="text" maxlength="60" placeholder="I am thankful for..." aria-label="Something you are thankful for">
+          <button class="btn" type="submit">Add slice</button>
+        </form>
+        <div class="row-actions">
+          <button class="btn ghost sm" type="button" id="inspire">Give me an idea</button>
+          <button class="btn ghost sm" type="button" id="copyList">Copy my list</button>
+          <button class="btn ghost sm" type="button" id="clearPie">Start a fresh pie</button>
+        </div>
+        <ul id="list" aria-label="Your slices"></ul>
+        <p class="hint" id="pieHint">Hover a slice to read it. Select the x to eat one. Up to 12 slices.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="plate">
+  <div class="sec-head">
+    <div class="num">1</div>
+    <h2>Build your plate</h2>
+    <p>Pile it on with the plus buttons. The meter tracks how close you are to a structural failure.</p>
+  </div>
+  <div class="two panel">
+    <div>
+      <div class="plate-stage" id="plateStage">
+        <svg id="plateSvg" viewBox="0 0 360 360" role="img" aria-label="A dinner plate that fills up as you add foods">
+          <defs>
+            <radialGradient id="pg" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#fbf4e8"/><stop offset="1" stop-color="#e0d3c1"/></radialGradient>
+          </defs>
+          <ellipse cx="180" cy="194" rx="168" ry="164" fill="rgba(0,0,0,.28)"/>
+          <circle cx="180" cy="180" r="168" fill="url(#pg)"/>
+          <circle cx="180" cy="180" r="140" fill="none" stroke="#d3c4af" stroke-width="2"/>
+          <circle cx="180" cy="180" r="132" fill="#f6eddf"/>
+          <g id="plateFood"></g>
+        </svg>
+      </div>
+    </div>
+    <div>
+      <div class="meter-row"><span>Plate capacity</span><span id="pct">0%</span></div>
+      <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="meterBar"><i id="meterFill"></i></div>
+      <p class="status" id="status" aria-live="polite"></p>
+      <div class="foods" id="foods"></div>
+      <div class="row-actions">
+        <button class="btn ghost sm" type="button" id="classic">Classic plate</button>
+        <button class="btn ghost sm" type="button" id="surprise">Surprise me</button>
+        <button class="btn ghost sm" type="button" id="clearPlate">Clear plate</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="sec-head">
+    <div class="num">2</div>
+    <h2>Turkey timeline</h2>
+    <p>Enter the bird and the dinner time. Get every step with a clock time, and tick them off as you go.</p>
+  </div>
+  <div class="panel">
+    <div class="form">
+      <label class="f">Turkey (lb)<input type="number" id="weight" min="6" max="30" step="0.5" value="16"></label>
+      <label class="f">Dinner date<input type="date" id="ddate"></label>
+      <label class="f">Dinner time<input type="time" id="dtime" value="16:00"></label>
+      <div class="checks" style="margin:0 0 6px">
+        <label><input type="checkbox" id="frozen" checked> Frozen bird</label>
+        <label><input type="checkbox" id="stuffed"> Stuffed</label>
+      </div>
+    </div>
+    <div class="summary" id="summary"></div>
+    <div class="progress"><i id="prog"></i></div>
+    <div class="hint" id="progText"></div>
+    <ol id="steps"></ol>
+    <p class="hint" style="margin-top:14px">Estimates assume a 325°F oven. Cook until the thickest part of the thigh reads 165°F on a thermometer, whatever the clock says.</p>
+  </div>
+</section>
+
+<section id="talk">
+  <div class="sec-head">
+    <div class="num">3</div>
+    <h2>Table talk</h2>
+    <p>For the lull between the first plate and pie. Draw a card, read it out loud, pass it left.</p>
+  </div>
+  <div class="deck">
+    <button class="card" id="card" type="button" aria-label="Draw a conversation card">
+      <div class="card-in" id="cardIn">
+        <div class="face f0" id="faceA"><small>Table talk</small><div class="q">Tap to draw a card.</div></div>
+        <div class="face back f1" id="faceB"><small></small><div class="q"></div></div>
+      </div>
+    </button>
+    <div class="deck-meta" id="deckMeta" aria-live="polite">24 cards in the deck</div>
+  </div>
+</section>
+
+</main>
+
+<div class="wrap">
+  <footer>
+    <span>Made for Thanksgiving.</span>
+    <span>🦃</span>
+  </footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
